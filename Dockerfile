@@ -15,7 +15,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ ./src/
-COPY clients/ ./clients/
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1

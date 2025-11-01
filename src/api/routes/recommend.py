@@ -16,11 +16,11 @@ async def recommend_dress(request: RecommendationRequest):
     Get wedding dress recommendations
 
     Parameters:
-    - **arm_length**: 팔 길이 (짧은, 보통, 긴)
-    - **leg_length**: 다리 길이 (짧은, 보통, 긴)
-    - **neck_length**: 목 길이 (짧은, 보통, 긴)
-    - **face_shape**: 얼굴형 (달걀, 넓은, 각진, 긴)
-    - **num_recommendations**: 추천받을 스타일 개수 (1-5개, 기본값: 3)
+    - **arm_length**: Arm length (short, normal, long)
+    - **leg_length**: Leg length (short, normal, long)
+    - **neck_length**: Neck length (short, normal, long)
+    - **face_shape**: Face shape (oval, wide, angular, long)
+    - **num_recommendations**: Number of recommendations (1-5, default: 3)
 
     Returns wedding dress recommendations with styling tips
     """

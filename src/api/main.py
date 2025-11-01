@@ -9,6 +9,10 @@ from src.database import init_db
 from src.config import redis_client, settings
 from src.api.routes import recommend, stats
 
+import os
+
+env_variable_value = os.getenv('OPENAI_API_KEY')
+print(env_variable_value)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

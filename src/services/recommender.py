@@ -49,7 +49,7 @@ JSON 형식 ({num_recommendations}개 추천):
 }}"""
 
         response = await self.client.chat.completions.create(
-            model="gpt-4-turbo-preview",
+            model="gpt-5-nano",
             messages=[
                 {
                     "role": "system",
@@ -60,7 +60,6 @@ JSON 형식 ({num_recommendations}개 추천):
                     "content": prompt
                 }
             ],
-            temperature=0.7,
             response_format={"type": "json_object"}
         )
 

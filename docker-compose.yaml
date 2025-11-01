@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # MySQL Database
   mysql:
@@ -9,7 +7,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: wedding_dress_db
     ports:
-      - "3306:3306"
+      - "13306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./scripts/db/init.sql:/docker-entrypoint-initdb.d/init.sql
@@ -27,7 +25,7 @@ services:
     container_name: wedding_dress_redis
     command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
     ports:
-      - "6379:6379"
+      - "16379:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -54,7 +52,7 @@ services:
       APP_HOST: 0.0.0.0
       APP_PORT: 8000
     ports:
-      - "8000:8000"
+      - "18000:8000"
     depends_on:
       mysql:
         condition: service_healthy
