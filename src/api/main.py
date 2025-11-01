@@ -27,9 +27,9 @@ async def lifespan(app: FastAPI):
 
 # FastAPI app
 app = FastAPI(
-    title="Wedding Dress API Gateway",
-    description="AI-powered wedding dress recommendation service using MCP",
-    version="2.0.0",
+    title="Wedding Dress Recommendation API",
+    description="AI-powered wedding dress recommendation service",
+    version="3.0.0",
     lifespan=lifespan
 )
 
@@ -51,10 +51,9 @@ app.include_router(stats.router)
 async def root():
     """Health check endpoint"""
     return {
-        "service": "Wedding Dress API Gateway",
+        "service": "Wedding Dress Recommendation API",
         "status": "running",
-        "version": "2.0.0",
-        "backend": "MCP Server"
+        "version": "3.0.0"
     }
 
 

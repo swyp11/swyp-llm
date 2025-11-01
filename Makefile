@@ -9,11 +9,8 @@ help: ## Show this help message
 install: ## Install dependencies
 	pip install -r requirements.txt
 
-dev: ## Run development server (API Gateway)
+dev: ## Run development server
 	python -m uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
-
-dev-mcp: ## Run MCP server directly
-	python -m src.mcp.server
 
 up: ## Start all services with Docker Compose
 	docker-compose up -d
@@ -38,12 +35,6 @@ rebuild: ## Rebuild and restart services
 	docker-compose down
 	docker-compose build --no-cache
 	docker-compose up -d
-
-test-mcp: ## Run MCP client test
-	python -m clients.mcp_client
-
-test-http: ## Run HTTP client test
-	python -m clients.http_client
 
 clean: ## Clean up containers and volumes
 	docker-compose down -v

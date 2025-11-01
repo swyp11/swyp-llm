@@ -38,7 +38,7 @@ services:
     networks:
       - wedding_dress_network
 
-  # API Gateway
+  # FastAPI Server
   api:
     build: .
     container_name: wedding_dress_api
@@ -62,7 +62,6 @@ services:
         condition: service_healthy
     volumes:
       - ./src:/app/src
-      - ./clients:/app/clients
     networks:
       - wedding_dress_network
     restart: unless-stopped

@@ -35,6 +35,12 @@ class RecommendationRequest(BaseModel):
     leg_length: LegLength = Field(..., description="다리 길이")
     neck_length: NeckLength = Field(..., description="목 길이")
     face_shape: FaceShape = Field(..., description="얼굴형")
+    num_recommendations: int = Field(
+        default=3,
+        ge=1,
+        le=5,
+        description="추천받을 스타일 개수 (1-5개)"
+    )
 
     class Config:
         json_schema_extra = {
@@ -42,7 +48,8 @@ class RecommendationRequest(BaseModel):
                 "arm_length": "보통",
                 "leg_length": "긴",
                 "neck_length": "보통",
-                "face_shape": "달걀"
+                "face_shape": "달걀",
+                "num_recommendations": 3
             }
         }
 
