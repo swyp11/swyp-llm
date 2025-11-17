@@ -18,6 +18,18 @@ class DressRecommender:
         params = f"{arm}_{leg}_{neck}_{face}_{body}_{num}"
         return hashlib.sha256(params.encode()).hexdigest()
 
+    @staticmethod
+    def _translate_to_korean(value: str, category: str) -> str:
+        """Translate English API values to Korean for GPT prompt"""
+        translations = {
+            "arm": {"short": "짧은 팔", "medium": "보통 팔", "long": "긴 팔"},
+            "leg": {"short": "짧은 다리", "medium": "보통 다리", "long": "긴 다리"},
+            "neck": {"short": "짧은 목", "medium": "보통 목", "long": "긴 목"},
+            "face": {"oval": "oval", "wide": "wide", "angular": "angular", "long": "long"},
+            "body": {"thin": "thin", "medium": "medium", "heavy": "heavy"}
+        }
+        return translations.get(category, {}).get(value, value)
+
     async def generate(
         self,
         arm_length: str,
@@ -32,13 +44,20 @@ class DressRecommender:
         # Get available styles with suitability info
         styles_with_info = get_styles_with_suitability()
 
+        # Translate to Korean for better matching with styles_data
+        arm_kr = self._translate_to_korean(arm_length, "arm")
+        leg_kr = self._translate_to_korean(leg_length, "leg")
+        neck_kr = self._translate_to_korean(neck_length, "neck")
+        face_kr = self._translate_to_korean(face_shape, "face")
+        body_kr = self._translate_to_korean(body_type, "body")
+
         # Build body characteristics
         body_chars = f"""신체 특징:
-- 팔: {arm_length}
-- 다리: {leg_length}
-- 목: {neck_length}
-- 얼굴형: {face_shape}
-- 체형: {body_type}"""
+- 팔: {arm_kr}
+- 다리: {leg_kr}
+- 목: {neck_kr}
+- 얼굴형: {face_kr}
+- 체형: {body_kr}"""
 
         # Improved prompt with suitability information
         prompt = f"""{body_chars}
