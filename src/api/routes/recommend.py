@@ -38,19 +38,19 @@ async def recommend_dress(request: RecommendationRequest):
             arm_length, leg_length, neck_length, face_shape, body_type, num_recommendations
         )
 
-        # 1. Check Redis cache
-        cached_result = await redis_client.get(f"recommendation:{query_hash}")
-        if cached_result:
-            return RecommendationResponse(
-                request_params=request,
-                recommendations=[
-                    DressRecommendation(**rec)
-                    for rec in cached_result["recommendations"]
-                ],
-                overall_advice=cached_result["overall_advice"],
-                cached=True,
-                source="redis_cache"
-            )
+        # 1. Check Redis cache (temporarily disabled for testing)
+        # cached_result = await redis_client.get(f"recommendation:{query_hash}")
+        # if cached_result:
+        #     return RecommendationResponse(
+        #         request_params=request,
+        #         recommendations=[
+        #             DressRecommendation(**rec)
+        #             for rec in cached_result["recommendations"]
+        #         ],
+        #         overall_advice=cached_result["overall_advice"],
+        #         cached=True,
+        #         source="redis_cache"
+        #     )
 
         # 2. Check MySQL database
         async with AsyncSessionLocal() as db:
