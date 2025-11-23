@@ -163,3 +163,95 @@ class SurveyResponse(SurveyBase):
 
     class Config:
         from_attributes = True
+
+
+# ============================================================================
+# Wedding Venue Schemas
+# ============================================================================
+
+class GuestCount(str, Enum):
+    SMALL = "소규모"  # 50명 이하
+    MEDIUM = "중규모"  # 50-150명
+    LARGE = "대규모"  # 150명 이상
+
+
+class Budget(str, Enum):
+    LOW = "저"
+    MEDIUM = "중"
+    HIGH = "고"
+
+
+class Region(str, Enum):
+    SEOUL = "서울"
+    GYEONGGI = "경기"
+    INCHEON = "인천"
+    ANYWHERE = "상관없음"
+
+
+class VenueStyle(str, Enum):
+    LUXURY = "럭셔리"
+    MODERN = "모던"
+    CLASSIC = "클래식"
+    NATURE = "자연친화"
+    GARDEN = "야외정원"
+    MINIMAL = "미니멀"
+    UNIQUE = "유니크"
+
+
+class Season(str, Enum):
+    SPRING = "봄"
+    SUMMER = "여름"
+    FALL = "가을"
+    WINTER = "겨울"
+
+
+class VenueRecommendationRequest(BaseModel):
+    """Wedding venue recommendation request"""
+    guest_count: GuestCount = Field(..., description="Expected number of guests")
+    budget: Budget = Field(..., description="Budget range")
+    region: Region = Field(..., description="Preferred region")
+    style_preference: VenueStyle = Field(..., description="Preferred venue style")
+    season: Season = Field(..., description="Wedding season")
+    num_recommendations: int = Field(
+        default=3,
+        ge=1,
+        le=5,
+        description="Number of recommendations (1-5)"
+    )
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "guest_count": "중규모",
+                "budget": "중",
+                "region": "서울",
+                "style_preference": "모던",
+                "season": "가을",
+                "num_recommendations": 3
+            }
+        }
+
+
+class VenueRecommendation(BaseModel):
+    """Single venue recommendation"""
+    venue_name: str = Field(..., description="Venue name")
+    description: str = Field(..., description="Venue description")
+    capacity: str = Field(..., description="Guest capacity range")
+    location: str = Field(..., description="Venue location")
+    price_range: str = Field(..., description="Price range")
+    estimated_cost: str = Field(..., description="Estimated cost")
+    why_recommended: str = Field(..., description="Why recommended")
+    pros: List[str] = Field(default_factory=list, description="Advantages")
+    cons: List[str] = Field(default_factory=list, description="Disadvantages")
+    amenities: List[str] = Field(default_factory=list, description="Amenities")
+    food_style: List[str] = Field(default_factory=list, description="Food service styles")
+    booking_tips: List[str] = Field(default_factory=list, description="Booking tips")
+
+
+class VenueRecommendationResponse(BaseModel):
+    """Wedding venue recommendation response"""
+    request_params: VenueRecommendationRequest
+    recommendations: List[VenueRecommendation] = Field(..., description="Venue recommendations")
+    overall_advice: str = Field(..., description="Overall advice")
+    cached: bool = Field(default=False, description="Whether cached result")
+    source: str = Field(default="ai_generated", description="Result source")

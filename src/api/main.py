@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 from src.database import init_db
 from src.config import redis_client, settings
-from src.api.routes import recommend, health, images
+from src.api.routes import recommend, health, images, venue_recommend
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -26,9 +26,9 @@ async def lifespan(app: FastAPI):
 
 # FastAPI app
 app = FastAPI(
-    title="Wedding Dress Recommendation API",
-    description="AI-powered wedding dress recommendation service",
-    version="3.0.0",
+    title="Wedding Recommendation API",
+    description="AI-powered wedding dress and venue recommendation service",
+    version="4.0.0",
     lifespan=lifespan
 )
 
@@ -43,6 +43,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(recommend.router)
+app.include_router(venue_recommend.router)
 app.include_router(health.router)
 app.include_router(images.router)
 
