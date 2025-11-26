@@ -2,9 +2,9 @@
 from fastapi import APIRouter, HTTPException
 
 from src.services.schemas import RecommendationRequest, RecommendationResponse, DressRecommendation
-from src.services.recommender import recommender, DressRecommender
+from src.services.dress_recommender import recommender, DressRecommender
 from src.database import AsyncSessionLocal
-from src.database.repositories.recommendation import recommendation_repo
+from src.database.repositories.dress import recommendation_repo
 from src.config import redis_client
 
 router = APIRouter(prefix="", tags=["recommendations"])

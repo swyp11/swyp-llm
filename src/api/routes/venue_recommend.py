@@ -38,27 +38,27 @@ async def recommend_venue(request: VenueRecommendationRequest):
             guest_count, budget, region, style_preference, season, num_recommendations
         )
 
-        # 1. Check Redis cache
-        cached_result = await redis_client.get(f"venue:{query_hash}")
-        if cached_result:
-            return VenueRecommendationResponse(
-                request_params=request,
-                recommendations=[
-                    VenueRecommendation(**rec)
-                    for rec in cached_result["recommendations"]
-                ],
-                overall_advice=cached_result["overall_advice"],
-                cached=True,
-                source="redis_cache"
-            )
+        # 1. Check Redis cache (temporarily disabled for testing)
+        # cached_result = await redis_client.get(f"venue:{query_hash}")
+        # if cached_result:
+        #     return VenueRecommendationResponse(
+        #         request_params=request,
+        #         recommendations=[
+        #             VenueRecommendation(**rec)
+        #             for rec in cached_result["recommendations"]
+        #         ],
+        #         overall_advice=cached_result["overall_advice"],
+        #         cached=True,
+        #         source="redis_cache"
+        #     )
 
         # 2. Check MySQL database
         async with AsyncSessionLocal() as db:
             db_record = await venue_repo.get_by_hash(db, query_hash)
             if db_record:
                 result = db_record.recommendation
-                # Save to Redis cache
-                await redis_client.set(f"venue:{query_hash}", result)
+                # Save to Redis cache (temporarily disabled for testing)
+                # await redis_client.set(f"venue:{query_hash}", result)
 
                 return VenueRecommendationResponse(
                     request_params=request,
@@ -81,8 +81,8 @@ async def recommend_venue(request: VenueRecommendationRequest):
                 db, query_hash, guest_count, budget, region, style_preference, season, recommendation
             )
 
-        # Save to cache
-        await redis_client.set(f"venue:{query_hash}", recommendation)
+        # Save to cache (temporarily disabled for testing)
+        # await redis_client.set(f"venue:{query_hash}", recommendation)
 
         return VenueRecommendationResponse(
             request_params=request,

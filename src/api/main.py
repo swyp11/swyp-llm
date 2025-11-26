@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 from src.database import init_db
 from src.config import redis_client, settings
-from src.api.routes import recommend, health, images, venue_recommend
+from src.api.routes import dress_recommend, health, images, venue_recommend
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -42,7 +42,7 @@ app.add_middleware(
 )
 
 # Include routers
-app.include_router(recommend.router)
+app.include_router(dress_recommend.router)
 app.include_router(venue_recommend.router)
 app.include_router(health.router)
 app.include_router(images.router)

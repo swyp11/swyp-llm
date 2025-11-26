@@ -3,7 +3,7 @@ import hashlib
 import json
 from openai import AsyncOpenAI
 from src.config import settings
-from src.services.styles_data import get_style_details, get_styles_with_suitability
+from src.services.dress_data import get_style_details, get_styles_with_suitability
 
 
 class DressRecommender:

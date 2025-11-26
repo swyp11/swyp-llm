@@ -2,7 +2,7 @@
 from fastapi import APIRouter, HTTPException
 
 from src.database import AsyncSessionLocal
-from src.database.repositories.recommendation import recommendation_repo
+from src.database.repositories.dress import recommendation_repo
 
 router = APIRouter(prefix="", tags=["statistics"])
 
